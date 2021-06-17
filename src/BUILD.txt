@@ -1,0 +1,29 @@
+- pip install -r requirements.txt (if you haven't already)
+
+- modify setup.py with new version number
+  - git commit before tagging!
+
+- git tag with new version number
+
+- clear old contents from dist folder (only important before twine upload)
+
+
+- Generate distribution archives
+  python setup.py sdist bdist_wheel
+  
+  
+- Upload the distribution archives
+    - To Test PyPi
+    twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+    
+    - Test with
+    pip install --index-url https://test.pypi.org/simple/ package_name
+    
+    - To PyPi
+    twine upload dist/*
+    
+    - use with
+    pip install package_name
+    pip install --upgrade package_name==new.version.number 
+    (e.g. pip install --upgrade eve-utils==1.2.0 )
+    (pip install --upgrade is supposed to upgrade to latest, but I haven't seen it work, esp. 0.5.1 => 0.5.2)
