@@ -9,16 +9,21 @@ Install with `pip` as usual:
 
 ## Introduction
 
-This library abstracts away authorization details and Upload API details, leaving the developer free to use the APIs directly and at as low a level as one would if using just the requests library without a bunch of boilerplate code.
+This library handles many of the fussy details when using BrightSign APIs (esp. the Upload API), freeing the developer from much boilerplate code.
 
-Here is an example of using the [Devices endpoint](https://docs.brightsign.biz/display/DOC/Devices+Endpoints) to show a list the names of all devices in a network:
+* construct a `Server` object
+* authorize it
+* use its `requests` object - as you would the plain-jane requests object but simpler
+* use its handy utility methods
+
+Here is a full example, using the [Devices endpoint](https://docs.brightsign.biz/display/DOC/Devices+Endpoints) to show a list the names of all devices in a network:
 
 ```python
 from pybrightsign import Server
 
 creds = {
     'network': 'Demo',
-    'username': 'user@example.org',
+    'username': 'user@example.com',
     'password': 'swordfish'
 }
 
@@ -37,14 +42,14 @@ for device in devices:
     print(device['name'])
 ```
 
-Even more powerful is the abstraction of the [Upload endpoint](https://docs.brightsign.biz/display/DOC/Upload+Endpoints), for example uploading a video and an image (to a particular folder), then uploading a web site (including the index.html and all css, js, images, etc. in the same folder):
+If you have ever wrestled with the [Upload endpoint](https://docs.brightsign.biz/display/DOC/Upload+Endpoints), you will love how easy it now is to upload stuff.  Here is a full example that uploads a video, an image (to a particular folder), then a web site (including the index.html and all css, js, images, etc. in the same folder):
 
 ```python
 from pybrightsign import Server
 
 creds = {
-    'network': 'My BSN Network',
-    'username': 'user@example.org',
+    'network': 'Demo',
+    'username': 'user@example.com',
     'password': 'swordfish'
 }
 
@@ -57,6 +62,21 @@ bsnee.upload_web_folder('./website/index.html')
 ```
 
 ## Methods
+
+This section will cover the following methods:
+
+* the `Server` class's constructor
+* `authorize(creds)`
+* `requests` (not a method, but it's covered here)
+  * prior knowledge of the [requests](https://docs.python-requests.org/en/master/) module is pretty much required
+  * you should also be aware of the [BrightSign's REST API and its endpoints](https://docs.brightsign.biz/display/DOC/REST+API)
+  * you do not need to worry about the [Upload endpoints](https://docs.brightsign.biz/display/DOC/Upload+Endpoints), as they are completely wrapped by the upload utility methods
+* `get_network_names()`
+* `switch_network(network_name)`
+* `move_device_to_group(device_id, new_group_id)`
+* Upload utility methods
+  * `upload_file(filepath, [to_folder])`
+  * `upload_web_folder(site_name, index_path)`
 
 ### Constructor
 
@@ -96,6 +116,8 @@ server = Server(domain, api_subdomain='apitest')
 
 Now all API calls will begin with 'https://apitest.brightsign.example.com'
 
+
+
 #### API Version
 
 Although optional, if you know the API version you should specify it.  If you do not the constructing a `Server` object prints the following warning:
@@ -109,6 +131,8 @@ API versions are in the form of `YYYY/MM` .  The constructor tries to discover t
 ```python
 server = server(domain, api_version='2019/03')
 ```
+
+
 
 ### Authorize
 
@@ -129,6 +153,8 @@ You can use the server object to see where you are connected any with which user
 >>> print(server)
 https://api.brightsign.example.com/2019/03/REST as Demo/user@example.org
 ```
+
+
 
 ### Requests
 
@@ -171,6 +197,8 @@ reponse = server.get('/devices', headers={'Accept': 'application/xml'})
 
 You can stop reading here and you will have the full power of BrightSign APIs as your disposal.  There are some utility methods which make some routine tasks a bit simpler.  Each of these can be done with just the server's requests, but why would you?
 
+
+
 ### List Networks
 
 To see which networks you have access to you could use `server.requests.get('/self/networks')`, iterate through the response json `items` array and pull out the `name` field of each object.  Or use `get_network_names()`
@@ -179,6 +207,8 @@ To see which networks you have access to you could use `server.requests.get('/se
 >>> server.get_network_names()
 ['admin', 'Demo', 'OtherNetwork']
 ```
+
+
 
 ### Switch Networks
 
@@ -190,6 +220,8 @@ If you are authorized on one network, you can easily switch to a different netwo
 https://api.brightsign.example.com/2019/03/REST as NewNetwork/user@example.org
 ```
 
+
+
 ### Move a device
 
 To move a device from one group to another:
@@ -197,6 +229,10 @@ To move a device from one group to another:
 ```python
 server.move_device_to_group(device_id, new_group_id)
 ```
+
+`device_id` can be the device's ID number, or its serial number
+
+`new_group_id` can be the group's ID number or its name.
 
 ### Upload a file or a Website
 
@@ -249,5 +285,3 @@ server.upload_web_folder('MySite', './my-site/index.html')
 ```
 
 Replace `index.html` with the actual site's entry page is (e.g. `default.htm` )
-
-...more to come...
