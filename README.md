@@ -223,23 +223,23 @@ Similarly, to upload a Website, point to the path/name of the site's index file.
 For example, if your website is a set of files like this:
 
 ```
-my-site
-│   index.html
-│
-├───css
-│       style.css
-│
-├───img
-│       background.jpg
-│       logo.png
-│
-└───js
-    ├───app
-    │       ui.js
-    │       
-    └───utils
-            api.js
-            tools.js
+./my-site
+|   index.html
+|
+|--css
+|       style.css
+|
+|--img
+|       background.jpg
+|       logo.png
+|
+|--js
+    |--app
+    |     ui.js
+    |  
+    |--utils
+          api.js
+          tools.js
 ```
 
 You upload this folder with the name 'MySite' (for example) like this:

@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='pybrightsign',
-    version='0.9.0',
+    version='0.9.1',
     description='BrightSign APIs for humans.  Python module to simplify using the BrightSign BSN/BSNEE API.',
     long_description=open('../README.md').read(),
     long_description_content_type='text/markdown',
