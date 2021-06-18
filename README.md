@@ -1,5 +1,5 @@
 # pybrightsign
-Python module to simplify using the BrightSign BSN/BSNEE API.
+BrightSign APIs for humans.  Python module to simplify using the BrightSign BSN/BSNEE API.
 
 > NOTE: this is early work in progress - interfaces subject to radical changes
 
