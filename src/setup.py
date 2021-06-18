@@ -3,14 +3,14 @@ from setuptools import setup
 
 setup(
     name='pybrightsign',
-    version='0.1.8',
-    description='Python module to simplify using the BrightSign BSN/BSNEE API.',
+    version='0.9.0',
+    description='BrightSign APIs for humans.  Python module to simplify using the BrightSign BSN/BSNEE API.',
     long_description=open('../README.md').read(),
     long_description_content_type='text/markdown',
     license='MIT',
     # https://pypi.org/classifiers/
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3',
         'Operating System :: OS Independent',
