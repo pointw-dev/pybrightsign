@@ -1,4 +1,5 @@
 import requests
+from requests.structures import CaseInsensitiveDict
 
 def urljoin(base, path):
     return '{0}/{1}'.format(base.rstrip('/'), path.lstrip('/'))
@@ -13,11 +14,13 @@ class SessionWithUrlBase(requests.Session):
     def request(self, method, url, **kwargs):
         modified_url = urljoin(self.url_base, url)
 
-        if 'headers' in kwargs:
-            if 'Accept' not in kwargs['headers']:
-                kwargs['headers']['Accept'] = 'application/json'
-        else:
-            kwargs['headers'] = {'Accept': 'application/json'}
+        if 'headers' not in kwargs:
+            kwargs['headers'] = CaseInsensitiveDict()
+
+        if 'Accept' not in kwargs['headers']:
+            kwargs['headers']['Accept'] = 'application/json'
+        if method.lower() in ['post','put','patch'] and 'Content-type' not in kwargs['headers']:
+            kwargs['headers']['Content-type'] = 'application/json'
 
         return super(SessionWithUrlBase, self).request(method, modified_url, **kwargs)
 

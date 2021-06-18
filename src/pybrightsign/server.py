@@ -77,12 +77,12 @@ class Server:
         self.base_url = f'https://{api_subdomain}.{server_domain}'
         self.username = ''
         if not self._test_api_version(api_version):
-            print(f'WARNING: api_version ({api_version}) is invalid for {self.base_url}.  Attempting to discover correct api_version. This may take several seconds. To remove this warning (and this delay), please supply a valid api_version')
+            print(f'WARNING: api_version ({api_version}) is invalid for {self.base_url}.  Attempting to discover correct api_version. This may take several seconds. To remove this warning (and this delay), please supply a valid api_version.')
             discovered_api_version = self._discover_version()
             if discovered_api_version:
                 api_version = discovered_api_version
             else:
-                raise ValueError(f'api_version ({api_version}) is invalid and no substitute was discovered.  Please specify a valid api_version for {self.base_url}')
+                raise ValueError(f'api_version ({api_version}) is invalid and no substitute was discovered.  Please specify a valid api_version for {self.base_url}.')
 
         self.api_version = api_version
         self.api_url = f'{self.base_url}/{api_version}/REST'
@@ -235,9 +235,6 @@ class Server:
             'name': group['name']
         }
 
-        headers = {
-            'Content-type': 'application/json'
-        }
         data = json.dumps(device)
         response = self.requests.put(f'/devices/{device_id}', data=data, headers=headers)
         # TODO: LOG print(response.status_code, response.reason, response.text)
@@ -424,7 +421,7 @@ class Server:
 
 
     def __str__(self):
-        s = f'BrightSign Server: {self.api_url}'
+        s = f'{self.api_url}'
         if self.username:
             s += f' as {self.username}'
         return s
