@@ -13,6 +13,7 @@ This library handles many of the fussy details when using BrightSign APIs (esp. 
 
 * construct a `Server` object
 * authorize it
+  * NOTE: as of API version `2019/03`, the credentials object needs to include `client_id` and `client_secret`
 * use its `requests` object - as you would the plain-jane requests object but simpler
 * use its handy utility methods
 
