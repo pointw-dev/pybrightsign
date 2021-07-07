@@ -1,5 +1,5 @@
 # pybrightsign
-BrightSign APIs for humans.  Python module to simplify using the BrightSign BSN/BSNEE API.
+BrightSign APIs for humans.  Python module to simplify using the BrightSign BSN/BSNEE [REST API](https://docs.brightsign.biz/display/DOC/REST+API).
 
 > NOTE: Now in Beta.  Pretty stable, but still subject to breaking changes in later releases.
 
